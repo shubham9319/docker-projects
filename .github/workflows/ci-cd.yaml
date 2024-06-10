@@ -10,17 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-      GCP_SERVICE_ACCOUNT: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-      GCP_SECRET_KEY: ${{ secrets.GCP_SECRET_KEY }}
       DOCKER_IMAGE: docker pull shubham9319/python-flask:v1.0
 
     steps:
-    - uses: 'google-github-actions/auth@v2'
+
+    - name: Authenticate with Google Cloud
+      uses: google-github-actions/auth@v2
       with:
-        version: 'latest'
+        credentials_json: ${{ secrets.GCP_SECRET_KEY }}
         service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT }}
-        service_account_key: ${{ secrets.GCP_SECRET_KEY }}
         project_id: ${{ secrets.GCP_PROJECT_ID }}
 
     - name: Pull Docker image
