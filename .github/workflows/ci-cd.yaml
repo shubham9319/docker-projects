@@ -16,8 +16,7 @@ jobs:
       DOCKER_IMAGE: docker pull shubham9319/python-flask:v1.0
 
     steps:
-    - name: Authenticate with Google Cloud
-      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+    - uses: 'google-github-actions/auth@v2'
       with:
         version: 'latest'
         service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT }}
