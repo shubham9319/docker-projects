@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DOCKER_IMAGE: docker pull shubham9319/python-flask:v1.0
+      DOCKER_IMAGE: shubham9319/python-flask:v1.0
 
     steps:
 
