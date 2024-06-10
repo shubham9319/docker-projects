@@ -1,0 +1,33 @@
+name: Deploy Python Flask App to GCP VM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      GCP_SERVICE_ACCOUNT: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+      GCP_SECRET_KEY: ${{ secrets.GCP_SECRET_KEY }}
+      DOCKER_IMAGE: docker pull shubham9319/python-flask:v1.0
+
+    steps:
+    - name: Authenticate with Google Cloud
+      uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: 'latest'
+        service_account_email: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+        service_account_key: ${{ secrets.GCP_SECRET_KEY }}
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+    - name: Pull Docker image
+      run: docker pull $DOCKER_IMAGE
+
+    - name: Run Python Flask image on GCP VM
+      run: |
+        gcloud compute ssh minikube-vm --zone=us-central1-a --command="docker run -d -p 5000:5000 $DOCKER_IMAGE"
+
