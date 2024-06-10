@@ -1,4 +1,4 @@
-name: Deploy Python Flask App to GCP VM
+name: Deploy Python Flask Application to GCP VM
 
 on:
   push:
